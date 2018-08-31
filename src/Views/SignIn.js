@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Text, Image, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image,AsyncStorage, View} from 'react-native';
 import LoginTextBox from '../Components/LoginTextBox';
 import ImageButton from '../Components/ImageButton';
 
@@ -12,6 +12,17 @@ export default class SignIn extends Component {
           email: '',
           password: '',
         };
+      }
+
+      //Storing data in async storage
+      storeToken = async (token) => {
+        try {
+          await AsyncStorage.setItem('token',token);
+          alert("token stored")
+        } catch (error) {
+          // Error saving data
+          alert(error)
+        }
       }
 
       //Create user through api
@@ -30,9 +41,10 @@ export default class SignIn extends Component {
               }),
             });
           let responseJson = await response.json();
-          alert(responseJson.token)
           console.log(responseJson)
-          if(responseJson.success){return this.props.navigation.navigate('List',{token:responseJson.token})}
+           if(responseJson.success){
+            this.storeToken(responseJson.token);   
+            return this.props.navigation.navigate('List')}
           } catch (error) {
           console.error(error);
           }
@@ -40,11 +52,11 @@ export default class SignIn extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff', justifyContent: 'space-between' }}>
+            <View style={{ flex: 1, backgroundColor: '#acefe2', justifyContent: 'space-between' }}>
                 <View>
                     <Image
-                        style={{ height: 200, marginTop: 20, borderRadius: 50 }}
-                        source={{ uri: 'http://www.thelogomix.com/files/u2/mosnet.jpg' }}>
+                        style={{ height: 150,width:150,marginLeft:70}}
+                        source={require('../Images/loginLogo.png')}>
                     </Image>
 
                     <View style={{ margin: 20 }}>

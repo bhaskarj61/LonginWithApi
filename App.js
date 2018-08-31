@@ -1,25 +1,45 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import SignIn from './src/Views/SignIn';
 import SignUp from './src/Views/SignUp';
-import { createStackNavigator} from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import UserList from './src/Views/UserList';
+import Nav from './src/Views/nav';
+import profile from './src/Views/profile';
 
 export default class App extends Component {
   render() {
     return (
-        <AppStackNavigator></AppStackNavigator>
+      <AppStackNavigator></AppStackNavigator>
     );
   }
 }
 const AppStackNavigator = createStackNavigator({
+  Nav: {
+    screen: Nav,
+    navigationOptions: {
+      header: null
+    }
+  },
   Login: {
     screen: SignIn,
+    navigationOptions: {
+      header: null
+    }
   },
   SignUp: {
     screen: SignUp,
+    navigationOptions: {
+      header: null
+    }
   },
-  List:{
-    screen:UserList
+  List: {
+    screen: UserList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  profile:{
+    screen:profile
   }
 
 })
