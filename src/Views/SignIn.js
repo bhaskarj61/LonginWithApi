@@ -1,81 +1,75 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Text, Image,AsyncStorage, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image, AsyncStorage, View } from 'react-native';
 import LoginTextBox from '../Components/LoginTextBox';
 import ImageButton from '../Components/ImageButton';
+// import AuthStore from '../MobX/store';
+import { observer,inject} from 'mobx-react';
 // import {connect} from 'react-redux'
 // import { createUser } from './src/Services/actions';
-
- export default class SignIn extends Component {
+ @inject('authStore')
+ @observer
+export default class SignIn extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          email: '',
-          password: '',
+            email: '',
+            password: '',
         };
-      }
+    }
 
-      //Storing data in async storage
-      storeToken = async (token) => {
+    //Storing data in async storage
+    storeToken = async (token) => {
         try {
-          await AsyncStorage.setItem('token',token);
-          alert("token stored")
+            await AsyncStorage.setItem('token', token);
+            alert("token stored")
         } catch (error) {
-          // Error saving data
-          alert(error)
+            // Error saving data
+            alert(error)
         }
-      }
-      storeEmail = async (email) => {
+    }
+    storeEmail = async (email) => {
         try {
-          await AsyncStorage.setItem('email',email);
-          alert("email stored")
+            await AsyncStorage.setItem('email', email);
+            alert("email stored")
         } catch (error) {
-          // Error saving data
-          alert(error)
+            // Error saving data
+            alert(error)
         }
-      }
+    }
 
-      //Create user through api
-      onSignIn= async ()=> {
-        
-          let response = await fetch('http://192.168.12.39:7000/api/v1/user/authenticateUser',
-           {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-           },
-            body: JSON.stringify({
-              email: this.state.email,
-              password:this.state.password,
-              }),
-            });
-          let responseJson = await response.json();
-          console.log(responseJson)
-           if(responseJson.success){
-            this.storeToken(responseJson.token);   
-            this.storeEmail(responseJson.data.email); 
-            return this.props.navigation.navigate('List')}
-          
+    //Create user through api
+    onSignIn = () => {
+
+        // store.authenticateUser(this.state.email,this.state.password);
+        // responseJson=this.props.responseJson
+        console.log(responseJson)
+        if (responseJson.success) {
+            this.storeToken(responseJson.token);
+            this.storeEmail(responseJson.data.email);
+            return this.props.navigation.navigate('List')
         }
+
+    }
 
     render() {
+        alert(JSON.stringify(this.props.authStore.responseJson))
         return (
             <View style={{ flex: 1, backgroundColor: '#acefe2', justifyContent: 'space-between' }}>
                 <View>
                     <Image
-                        style={{ height: 150,width:150,marginLeft:70}}
+                        style={{ height: 150, width: 150, marginLeft: 70 }}
                         source={require('../Images/loginLogo.png')}>
                     </Image>
 
                     <View style={{ margin: 20 }}>
-               
+
                         <LoginTextBox placeholder='Email'
-                         onChangeText={(email) => this.setState({ email })}
+                            onChangeText={(email) => this.setState({ email })}
                         ></LoginTextBox>
 
                         <LoginTextBox placeholder='Password'
-                        onChangeText={(password) => this.setState({ password })}
+                            onChangeText={(password) => this.setState({ password })}
                             secureTextEntry={true}
                         ></LoginTextBox>
 
@@ -100,9 +94,9 @@ import ImageButton from '../Components/ImageButton';
                 <View>
 
                     <TouchableOpacity
-                     onPress={() => {
-                        this.props.navigation.navigate('SignUp')
-                    }}
+                        onPress={() => {
+                            this.props.navigation.navigate('SignUp')
+                        }}
                         style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: 'black', fontSize: 20 }}>Create New Account..</Text>
                     </TouchableOpacity>
@@ -110,6 +104,6 @@ import ImageButton from '../Components/ImageButton';
                 </View>
             </View>
         );
-    }   
+    }
 }
 

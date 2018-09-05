@@ -5,14 +5,20 @@ import { createStackNavigator } from 'react-navigation'
 import UserList from './src/Views/UserList';
 import Nav from './src/Views/nav';
 import profile from './src/Views/profile';
-import { Provider } from 'react-redux';
+import { Provider } from 'mobx-react'
+import AuthStore from './src/MobX/store';
+const authStore = new AuthStore();
 
+const stores = {
+authStore
+}
  export default class App extends Component {
   render() {
-    return (
-          <AppStackNavigator/>
-      
-    );
+    return(
+      <Provider {...stores}>
+        <AppStackNavigator/>
+      </Provider>
+    )
   }
 }
 const AppStackNavigator = createStackNavigator({
