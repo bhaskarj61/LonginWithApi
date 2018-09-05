@@ -1,5 +1,4 @@
-package com.loginwithapi;
-
+package com.loginwithapi;     
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {

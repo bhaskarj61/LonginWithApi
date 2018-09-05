@@ -5,11 +5,13 @@ import { createStackNavigator } from 'react-navigation'
 import UserList from './src/Views/UserList';
 import Nav from './src/Views/nav';
 import profile from './src/Views/profile';
+import { Provider } from 'react-redux';
 
-export default class App extends Component {
+ export default class App extends Component {
   render() {
     return (
-      <AppStackNavigator></AppStackNavigator>
+          <AppStackNavigator/>
+      
     );
   }
 }
@@ -39,7 +41,13 @@ const AppStackNavigator = createStackNavigator({
     }
   },
   profile:{
-    screen:profile
+    screen:profile,  
+     navigationOptions: {
+      header: null
+    }
   }
 
 })
+
+
+

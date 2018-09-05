@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, Image, FlatList, ActivityIndicator, View, AsyncStorage } from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default class UserList extends Component {
     baseUrl = 'http://192.168.12.39:7000/api'
     constructor(props) {
@@ -72,14 +72,12 @@ export default class UserList extends Component {
             )
         }
         return (
-            <View style={{ flex: 1, backgroundColor: '#446A36' }}>
+            <View style={{ flex: 1, backgroundColor: '#fff'}}>
                 <View style={{ height: 80, backgroundColor: '#446A36', flexDirection: 'row',justifyContent:'space-between' }}>
                   
                 <View >
                         <TouchableOpacity onPress={this.redirectToProfile}>
-                            <Image
-                                style={{ height: 50,borderRadius:50,marginTop:24, width: 40, marginRight: 20 }}
-                                source={require('../Images/profile.png')} />
+                        <Icon name="user" size={40} color="grey" style={{margin:20}}  />
                         </TouchableOpacity>
                     </View>
                     <View>
@@ -90,13 +88,9 @@ export default class UserList extends Component {
 
                     <View>
                         <TouchableOpacity onPress={this.deleteUserToken}>
-                            <Image
-                                style={{ height: 60,borderRadius:50,marginTop:20, width: 40, marginRight: 20 }}
-                                source={{ uri: 'http://chittagongit.com//images/logout-icon/logout-icon-18.jpg' }} />
+                        <Icon name="sign-out" size={40} color="grey" style={{margin:20}} />
                         </TouchableOpacity>
                     </View>
-
-                    
                 </View>
                 <View>
                     <FlatList
@@ -105,7 +99,7 @@ export default class UserList extends Component {
                         onEndReached={this.getToken}
                         renderItem={({ item }) =>
 
-                            <View style={{ marginTop:5, height: 80, backgroundColor: '#acefe2', borderColor: '#446A36', flexDirection: 'row'}}>
+                            <View style={{ marginTop:1, height: 80, backgroundColor: '#fff', borderColor: '#446A36', flexDirection: 'row'}}>
                                 <View>
                                     <Image
                                         style={{ borderRadius: 50, width: 60, height: 60, margin: 10 }}

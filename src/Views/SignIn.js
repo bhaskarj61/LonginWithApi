@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image,AsyncStorage, View} from 'react-native';
 import LoginTextBox from '../Components/LoginTextBox';
 import ImageButton from '../Components/ImageButton';
+// import {connect} from 'react-redux'
+// import { createUser } from './src/Services/actions';
 
-
-export default class SignIn extends Component {
+ export default class SignIn extends Component {
     constructor(props) {
         super(props);
     
@@ -24,10 +25,19 @@ export default class SignIn extends Component {
           alert(error)
         }
       }
+      storeEmail = async (email) => {
+        try {
+          await AsyncStorage.setItem('email',email);
+          alert("email stored")
+        } catch (error) {
+          // Error saving data
+          alert(error)
+        }
+      }
 
       //Create user through api
-      onSignIn=async()=> {
-        try {
+      onSignIn= async ()=> {
+        
           let response = await fetch('http://192.168.12.39:7000/api/v1/user/authenticateUser',
            {
             method: 'POST',
@@ -44,10 +54,9 @@ export default class SignIn extends Component {
           console.log(responseJson)
            if(responseJson.success){
             this.storeToken(responseJson.token);   
+            this.storeEmail(responseJson.data.email); 
             return this.props.navigation.navigate('List')}
-          } catch (error) {
-          console.error(error);
-          }
+          
         }
 
     render() {
@@ -101,9 +110,6 @@ export default class SignIn extends Component {
                 </View>
             </View>
         );
-    }
-    
+    }   
 }
-
-
 
