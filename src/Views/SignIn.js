@@ -40,10 +40,9 @@ export default class SignIn extends Component {
 
     //Create user through api
     onSignIn = () => {
-
-        // store.authenticateUser(this.state.email,this.state.password);
-        // responseJson=this.props.responseJson
-        console.log(responseJson)
+        this.props.authStore.authenticateUser(this.state.email,this.state.password);
+         responseJson=this.props.authStore.resJson
+        alert("ewgfwg"+JSON.stringify(this.props.authStore.resJson))
         if (responseJson.success) {
             this.storeToken(responseJson.token);
             this.storeEmail(responseJson.data.email);
@@ -53,7 +52,7 @@ export default class SignIn extends Component {
     }
 
     render() {
-        alert(JSON.stringify(this.props.authStore.responseJson))
+        
         return (
             <View style={{ flex: 1, backgroundColor: '#acefe2', justifyContent: 'space-between' }}>
                 <View>
