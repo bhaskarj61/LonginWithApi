@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image, AsyncStorage, View } from 'react-native';
 import LoginTextBox from '../Components/LoginTextBox';
 import ImageButton from '../Components/ImageButton';
-// import AuthStore from '../MobX/store';
 import { observer,inject} from 'mobx-react';
-// import {connect} from 'react-redux'
-// import { createUser } from './src/Services/actions';
  @inject('authStore')
  @observer
 export default class SignIn extends Component {
@@ -18,34 +15,16 @@ export default class SignIn extends Component {
         };
     }
 
-    //Storing data in async storage
-    storeToken = async (token) => {
-        try {
-            await AsyncStorage.setItem('token', token);
-            alert("token stored")
-        } catch (error) {
-            // Error saving data
-            alert(error)
-        }
-    }
-    storeEmail = async (email) => {
-        try {
-            await AsyncStorage.setItem('email', email);
-            alert("email stored")
-        } catch (error) {
-            // Error saving data
-            alert(error)
-        }
-    }
-
+ 
     //Create user through api
     onSignIn = () => {
         this.props.authStore.authenticateUser(this.state.email,this.state.password);
          responseJson=this.props.authStore.resJson
-        alert("ewgfwg"+JSON.stringify(this.props.authStore.resJson))
+        // alert("data coming to onSignIn "+JSON.stringify(this.props.authStore.resJson))
         if (responseJson.success) {
-            this.storeToken(responseJson.token);
-            this.storeEmail(responseJson.data.email);
+            this.props.authStore.storeToken(responseJson.token);
+            this.props.authStore.storeEmail(responseJson.data.email);
+            this.props.authStore.storeName(responseJson.data.name);
             return this.props.navigation.navigate('List')
         }
 
@@ -54,11 +33,11 @@ export default class SignIn extends Component {
     render() {
         
         return (
-            <View style={{ flex: 1, backgroundColor: '#acefe2', justifyContent: 'space-between' }}>
+            <View style={{ flex: 1, backgroundColor: '#fff', justifyContent: 'space-between' }}>
                 <View>
                     <Image
-                        style={{ height: 150, width: 150, marginLeft: 70 }}
-                        source={require('../Images/loginLogo.png')}>
+                        style={{ height: 150, width: 150, marginLeft: 120 }}
+                        source={require('../Images/greenLogo.png')}>
                     </Image>
 
                     <View style={{ margin: 20 }}>

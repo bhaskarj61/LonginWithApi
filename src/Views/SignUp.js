@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View ,Keyboard} from 'react-native';
 import LoginTextBox from '../Components/LoginTextBox';
 import ImageButton from '../Components/ImageButton';
-
+import { observer,inject} from 'mobx-react';
+@inject('authStore')
+@observer
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -20,22 +22,11 @@ export default class SignUp extends Component {
     regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
    if(regexEmail.test(this.state.email)&&regexPassword.test(this.state.password)){
     try {
-      let response = await fetch('http://192.168.12.39:7000/api/v1/user/createUser',
-       {
-        method: 'POST',
-        headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-       },
-        body: JSON.stringify({
-          name:this.state.name,
-          email: this.state.username,
-          password:this.state.password,
-          }),
-        });
-      let responseJson = await response.json();
-      alert("responseJson.success")
-     return this.props.navigation.navigate('SignIn')    
+      this.props.authStore.createUser(this.state.name,this.state.email,this.state.password);
+      responseJson=this.props.authStore.resJson
+      Keyboard.dismiss();
+      // alert(JSON.stringify(this.props.authStore.resJson))
+      this.props.navigation.navigate('Login')    
       } catch (error) {
       console.error(error);
       }

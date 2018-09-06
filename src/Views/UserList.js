@@ -25,7 +25,10 @@ export default class UserList extends Component {
     }
 
     redirectToProfile = async () => {
-    this.props.navigation.navigate('profile')
+        this.props.navigation.navigate('profile')
+    }
+    redirectToSettings = async () => {
+        this.props.navigation.navigate('settings')
     }
 
     //Get token from asyn storage
@@ -72,23 +75,27 @@ export default class UserList extends Component {
             )
         }
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff'}}>
-                <View style={{ height: 80, backgroundColor: '#446A36', flexDirection: 'row',justifyContent:'space-between' }}>
-                  
-                <View >
-                        <TouchableOpacity onPress={this.redirectToProfile}>
-                        <Icon name="user" size={40} color="grey" style={{margin:20}}  />
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <Text style={{fontSize:30,fontStyle:'sans-serif',marginTop:10,color:'#fff'}}>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                <View style={{ height: 80, backgroundColor: '#446A36', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View>
+                        <Text style={{ fontSize: 30, fontStyle: 'sans-serif', marginTop: 10, color: '#fff' }}>
                             Users List
                         </Text>
+                    </View>
+                    <View >
+                        <TouchableOpacity onPress={this.redirectToProfile}>
+                            <Icon name="user" size={40} color="#fff" style={{ margin: 20 }} />
+                        </TouchableOpacity>
+                    </View>
+                    <View >
+                        <TouchableOpacity onPress={this.redirectToSettings}>
+                            <Icon name="gear" size={40} color="#fff" style={{ margin: 20 }} />
+                        </TouchableOpacity>
                     </View>
 
                     <View>
                         <TouchableOpacity onPress={this.deleteUserToken}>
-                        <Icon name="sign-out" size={40} color="grey" style={{margin:20}} />
+                            <Icon name="sign-out" size={40} color="grey" style={{ margin: 20 }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -99,7 +106,7 @@ export default class UserList extends Component {
                         onEndReached={this.getToken}
                         renderItem={({ item }) =>
 
-                            <View style={{ marginTop:1, height: 80, backgroundColor: '#fff', borderColor: '#446A36', flexDirection: 'row'}}>
+                            <View style={{ marginTop: 1, height: 80, backgroundColor: '#fff', borderColor: '#446A36', flexDirection: 'row' }}>
                                 <View>
                                     <Image
                                         style={{ borderRadius: 50, width: 60, height: 60, margin: 10 }}

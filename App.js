@@ -7,6 +7,8 @@ import Nav from './src/Views/nav';
 import profile from './src/Views/profile';
 import { Provider } from 'mobx-react'
 import AuthStore from './src/MobX/store';
+import Settings from './src/Views/Settings';
+
 const authStore = new AuthStore();
 
 const stores = {
@@ -48,6 +50,12 @@ const AppStackNavigator = createStackNavigator({
   },
   profile:{
     screen:profile,  
+     navigationOptions: {
+      header: null
+    }
+  },
+  settings:{
+    screen:Settings,  
      navigationOptions: {
       header: null
     }
